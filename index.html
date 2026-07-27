@@ -1,0 +1,2520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美好生活月·阶段一数据 & 优质Case分享</title>
+<style>
+  :root {
+    --primary: #1a6eff;
+    --primary-dark: #1456c4;
+    --accent: #ff7d00;
+    --accent-warm: #ffb700;
+    --success: #16a34a;
+    --success-bg: #f0fdf4;
+    --danger: #dc2626;
+    --danger-bg: #fef2f2;
+    --text-1: #0f172a;
+    --text-2: #475569;
+    --text-3: #94a3b8;
+    --bg: #f5f7fa;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --border-soft: #f1f5f9;
+    --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+    --shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+    --shadow-lg: 0 12px 32px -8px rgba(15, 23, 42, 0.10), 0 4px 8px -2px rgba(15, 23, 42, 0.05);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-1);
+    line-height: 1.6;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ============== 顶部 Banner ============== */
+  .hero {
+    position: relative;
+    background: linear-gradient(135deg, #1a6eff 0%, #4f8aff 50%, #ff7d00 100%);
+    color: #fff;
+    padding: 56px 0 80px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.18) 0%, transparent 30%),
+      radial-gradient(circle at 80% 70%, rgba(255,255,255,0.15) 0%, transparent 30%);
+  }
+  .hero::after {
+    content: "鹅选美好生活月";
+    position: absolute;
+    bottom: -28px; right: 32px;
+    font-size: 140px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.05);
+    letter-spacing: -4px;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(8px);
+    padding: 6px 14px; border-radius: 999px;
+    font-size: 12px; font-weight: 500;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+  .hero-eyebrow::before { content: "📊"; }
+  .hero h1 {
+    font-size: 44px; font-weight: 800; letter-spacing: -1px; line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .hero h1 .highlight {
+    background: linear-gradient(180deg, transparent 60%, var(--accent-warm) 60%);
+    padding: 0 6px;
+  }
+  .hero-sub {
+    font-size: 17px; font-weight: 400; opacity: 0.95; max-width: 720px;
+    margin-bottom: 28px;
+  }
+  .hero-stats {
+    display: flex; gap: 36px; flex-wrap: wrap;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.18);
+  }
+  .hero-stat-item .num {
+    font-size: 36px; font-weight: 800; line-height: 1; letter-spacing: -1px;
+    font-feature-settings: "tnum";
+  }
+  .hero-stat-item .label {
+    font-size: 13px; opacity: 0.85; margin-top: 6px;
+  }
+  .hero-stat-item { display: flex; flex-direction: column; }
+
+  /* 阶段时间线 */
+  .timeline {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    margin-top: 32px;
+  }
+  .tl-item {
+    background: rgba(255,255,255,0.92);
+    color: var(--text-1);
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 13px;
+    display: flex; align-items: center; gap: 10px;
+    box-shadow: var(--shadow-sm);
+  }
+  .tl-item .tl-tag {
+    background: linear-gradient(135deg, var(--primary), #4f8aff);
+    color: #fff;
+    font-size: 11px; font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+  .tl-item .tl-tag.alt { background: linear-gradient(135deg, var(--accent), #ff9a3c); }
+  .tl-item .tl-tag.warn { background: linear-gradient(135deg, #f59e0b, #facc15); }
+  .tl-item .tl-tag.gold { background: linear-gradient(135deg, #d4a017, #ffd700); }
+  .tl-item.is-active {
+    background: var(--accent-warm);
+    box-shadow: 0 4px 16px rgba(255,183,0,0.4);
+  }
+  .tl-item.is-active .tl-tag { background: rgba(0,0,0,0.7); }
+
+  /* ============== 导航 ============== */
+  .nav {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 50;
+    box-shadow: var(--shadow-sm);
+  }
+  .nav-inner {
+    display: flex; gap: 4px;
+    overflow-x: auto;
+    padding: 8px 0;
+  }
+  .nav a {
+    color: var(--text-2);
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px; font-weight: 500;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .nav a:hover { background: var(--border-soft); color: var(--primary); }
+
+  /* ============== 通用板块 ============== */
+  section {
+    padding: 56px 0 24px;
+  }
+  .sec-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 28px;
+  }
+  .sec-num {
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--primary), #4f8aff);
+    color: #fff;
+    font-size: 17px; font-weight: 800;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(26, 110, 255, 0.25);
+  }
+  .sec-title {
+    font-size: 26px; font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+  .sec-tag {
+    display: inline-block;
+    background: #fff5e6;
+    color: var(--accent);
+    font-size: 12px; font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 6px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .sec-sub {
+    color: var(--text-2);
+    font-size: 14px;
+    margin-bottom: 24px;
+    margin-left: 52px;
+  }
+
+  /* ============== 数据卡片 ============== */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .kpi-card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 22px 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-soft);
+    position: relative;
+    overflow: hidden;
+  }
+  .kpi-card::before {
+    content: "";
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--primary), #4f8aff);
+  }
+  .kpi-card.warm::before { background: linear-gradient(90deg, var(--accent), var(--accent-warm)); }
+  .kpi-card.green::before { background: linear-gradient(90deg, var(--success), #4ade80); }
+  .kpi-card.purple::before { background: linear-gradient(90deg, #8b5cf6, #c084fc); }
+  .kpi-label {
+    color: var(--text-2);
+    font-size: 13px;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .kpi-num {
+    font-size: 36px; font-weight: 800; line-height: 1; letter-spacing: -1px;
+    color: var(--text-1);
+    font-feature-settings: "tnum";
+  }
+  .kpi-num small {
+    font-size: 16px; font-weight: 600;
+    color: var(--text-2);
+    margin-left: 4px;
+  }
+  .kpi-trend {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--text-2);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .up { color: var(--success); font-weight: 700; }
+  .down { color: var(--danger); font-weight: 700; }
+  .flat { color: var(--text-3); font-weight: 600; }
+
+  /* ============== 双栏 ============== */
+  .grid-2 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+  /* ============== 卡片 ============== */
+  .card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-soft);
+  }
+  .card-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .card-title {
+    font-size: 16px; font-weight: 700;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card-title .dot {
+    width: 4px; height: 16px;
+    background: var(--primary);
+    border-radius: 2px;
+  }
+  .card-title .dot.warm { background: var(--accent); }
+  .card-title .dot.green { background: var(--success); }
+
+  /* ============== 表格 ============== */
+  .data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 13px;
+  }
+  .data-table thead th {
+    background: #f8fafc;
+    color: var(--text-2);
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    letter-spacing: 0.2px;
+  }
+  .data-table thead th:first-child { border-top-left-radius: 8px; }
+  .data-table thead th:last-child { border-top-right-radius: 8px; }
+  .data-table tbody td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border-soft);
+    color: var(--text-1);
+    font-feature-settings: "tnum";
+  }
+  .data-table tbody tr:hover { background: #f8fafc; }
+  .data-table tbody tr.summary td {
+    background: #fff8e6;
+    font-weight: 700;
+    border-top: 2px solid var(--accent);
+  }
+  .data-table .num-cell { text-align: right; font-weight: 600; }
+  .data-table .brand-cell { font-weight: 600; }
+
+  /* ============== 进度条 ============== */
+  .bar-wrap { display: flex; align-items: center; gap: 8px; }
+  .bar-bg { flex: 1; height: 6px; background: var(--border-soft); border-radius: 3px; overflow: hidden; }
+  .bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary), #4f8aff); border-radius: 3px; }
+  .bar-fill.warm { background: linear-gradient(90deg, var(--accent), var(--accent-warm)); }
+  .bar-fill.green { background: linear-gradient(90deg, var(--success), #4ade80); }
+  .bar-fill.purple { background: linear-gradient(90deg, #8b5cf6, #c084fc); }
+  .bar-text { font-size: 12px; font-weight: 700; color: var(--text-1); min-width: 36px; text-align: right; font-feature-settings: "tnum"; }
+
+  /* ============== Case 卡片 ============== */
+  .case-card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 0;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-soft);
+    overflow: hidden;
+    margin-bottom: 20px;
+    transition: all 0.2s;
+  }
+  .case-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+  }
+  .case-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+  }
+  .case-img-wrap {
+    background: #f8fafc;
+    position: relative;
+    border-right: 1px solid var(--border-soft);
+    display: flex; align-items: center; justify-content: center;
+    min-height: 480px;
+  }
+  .case-img-wrap img {
+    max-width: 100%; max-height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  .case-img-tag {
+    position: absolute; top: 12px; left: 12px;
+    background: rgba(0,0,0,0.75);
+    color: #fff;
+    font-size: 11px; font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    backdrop-filter: blur(4px);
+  }
+  .case-body { padding: 24px 28px; }
+  .case-head {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .case-brand {
+    font-size: 20px; font-weight: 800;
+    color: var(--text-1);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .case-brand .badge {
+    font-size: 11px; font-weight: 600;
+    background: linear-gradient(135deg, var(--accent), var(--accent-warm));
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+  .case-meta {
+    color: var(--text-2);
+    font-size: 13px;
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+    flex-wrap: wrap;
+  }
+  .case-meta span { display: inline-flex; align-items: center; gap: 4px; }
+  .case-meta span::before { content: "•"; color: var(--text-3); margin-right: 2px; }
+  .case-meta span:first-child::before { display: none; }
+  .case-tag-row {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .case-tag {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+  .case-tag.ren { background: #ede9fe; color: #6d28d9; }
+  .case-tag.huo { background: #fef3c7; color: #b45309; }
+  .case-tag.chang { background: #dbeafe; color: var(--primary); }
+
+  .case-section-label.highlight-label {
+    color: var(--success);
+  }
+  .case-section-label.highlight-label::before {
+    background: var(--success);
+  }
+  .highlight-body {
+    background: linear-gradient(135deg, #f0fdf4, #ecfccb);
+    border: 1px solid #bbf7d0;
+    border-left: 3px solid var(--success);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text-1);
+  }
+  .highlight-body strong { color: var(--success); }
+
+  .case-section {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--border);
+  }
+  .case-section-label {
+    font-size: 12px; font-weight: 700;
+    color: var(--text-2);
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .case-section-label::before {
+    content: ""; width: 3px; height: 12px;
+    background: var(--accent); border-radius: 2px;
+  }
+  .case-section p {
+    color: var(--text-1);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .case-section ul { padding-left: 20px; color: var(--text-1); }
+  .case-section li { margin-bottom: 4px; line-height: 1.7; }
+
+  .case-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .case-stat {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 12px 14px;
+    border: 1px solid var(--border-soft);
+  }
+  .case-stat .stat-label {
+    font-size: 11px; color: var(--text-2);
+    margin-bottom: 4px;
+  }
+  .case-stat .stat-value {
+    font-size: 22px; font-weight: 800; line-height: 1;
+    color: var(--text-1);
+    font-feature-settings: "tnum";
+    letter-spacing: -0.5px;
+  }
+  .case-stat .stat-trend {
+    font-size: 12px;
+    margin-top: 4px;
+    font-weight: 600;
+  }
+  .case-stat .stat-trend.up { color: var(--success); }
+  .case-stat .stat-trend.down { color: var(--danger); }
+
+  /* ============== Tips 卡片 ============== */
+  .tip-card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-soft);
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  .tip-card .tip-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; font-weight: 800;
+    color: #fff;
+    margin-bottom: 14px;
+  }
+  .tip-card.ren .tip-icon { background: linear-gradient(135deg, #8b5cf6, #c084fc); }
+  .tip-card.huo .tip-icon { background: linear-gradient(135deg, var(--accent), var(--accent-warm)); }
+  .tip-card.chang .tip-icon { background: linear-gradient(135deg, var(--primary), #4f8aff); }
+  .tip-card h3 {
+    font-size: 17px; font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .tip-card .tip-list {
+    list-style: none;
+    padding: 0;
+  }
+  .tip-card .tip-list li {
+    padding: 8px 0 8px 22px;
+    position: relative;
+    font-size: 13.5px;
+    color: var(--text-1);
+    line-height: 1.6;
+    border-bottom: 1px dashed var(--border-soft);
+  }
+  .tip-card .tip-list li:last-child { border-bottom: none; }
+  .tip-card .tip-list li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 14px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--primary);
+    opacity: 0.15;
+  }
+  .tip-card.ren .tip-list li::before { background: #8b5cf6; }
+  .tip-card.huo .tip-list li::before { background: var(--accent); }
+  .tip-card.chang .tip-list li::before { background: var(--primary); }
+  .tip-card .tip-list li::after {
+    content: "";
+    position: absolute;
+    left: 4px; top: 18px;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .tip-card.ren .tip-list li::after { color: #8b5cf6; }
+  .tip-card.huo .tip-list li::after { color: var(--accent); }
+  .tip-card.chang .tip-list li::after { color: var(--primary); }
+
+  /* 分布图 */
+  .dist-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .dist-row:last-child { border-bottom: none; }
+  .dist-label {
+    width: 100px;
+    font-size: 13px; color: var(--text-2);
+    font-weight: 600;
+  }
+  .dist-bar-wrap { flex: 1; }
+  .dist-count {
+    width: 80px; text-align: right;
+    font-size: 14px; font-weight: 700;
+    font-feature-settings: "tnum";
+  }
+
+  /* ============== 大Tip区 ============== */
+  .bigtip {
+    background: linear-gradient(135deg, #fff8e6 0%, #fff5e6 100%);
+    border-radius: 16px;
+    padding: 28px 32px;
+    border: 1px solid #ffd99e;
+    margin-bottom: 16px;
+  }
+  .bigtip-num {
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    width: 36px; height: 36px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 16px; font-weight: 800;
+    border-radius: 50%;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+  .bigtip-title {
+    font-size: 18px; font-weight: 800;
+    color: var(--text-1);
+    margin-bottom: 6px;
+    display: flex; align-items: center;
+  }
+  .bigtip-body {
+    color: var(--text-1);
+    font-size: 14px;
+    line-height: 1.75;
+    margin-left: 48px;
+  }
+  .bigtip-body strong {
+    color: var(--accent);
+    font-weight: 700;
+    background: #fff;
+    padding: 0 4px;
+    border-radius: 3px;
+  }
+  .bigtip-body .tag {
+    display: inline-block;
+    background: #fff;
+    border: 1px solid #ffd99e;
+    color: var(--accent);
+    font-size: 12px; font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin: 0 2px;
+  }
+
+  /* ============== 标签 ============== */
+  .pill {
+    display: inline-block;
+    font-size: 11px; font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+  .pill.success { background: var(--success-bg); color: var(--success); }
+  .pill.warn { background: #fff8e6; color: var(--accent); }
+  .pill.danger { background: var(--danger-bg); color: var(--danger); }
+  .pill.info { background: #eff6ff; color: var(--primary); }
+
+  /* ============== 页脚 ============== */
+  footer {
+    text-align: center;
+    padding: 32px 24px 48px;
+    color: var(--text-3);
+    font-size: 12px;
+  }
+  footer .footer-line {
+    display: inline-block;
+    padding: 4px 14px;
+    background: #fff;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+  }
+
+  /* ============== 话术框架大图 ============== */
+  .tip-framework {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 10px 0;
+    border: 1px solid var(--border-soft);
+    background: #f8fafc;
+  }
+  .tip-numlist {
+    margin-top: 10px;
+    padding-left: 0;
+    list-style: none;
+    counter-reset: tip-num;
+  }
+  .tip-numlist > li {
+    counter-increment: tip-num;
+    padding: 12px 0 12px 36px;
+    position: relative;
+    border-bottom: 1px dashed var(--border-soft);
+  }
+  .tip-numlist > li:last-child { border-bottom: none; }
+  .tip-numlist > li::before {
+    content: counter(tip-num);
+    position: absolute;
+    left: 0; top: 12px;
+    width: 24px; height: 24px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 800;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tip-numlist > li > strong {
+    display: block;
+    font-size: 14px;
+    color: var(--text-1);
+    margin-bottom: 4px;
+  }
+  .tip-numlist > li > .num-desc {
+    font-size: 13px;
+    color: var(--text-1);
+    line-height: 1.7;
+  }
+  .num-sublist {
+    list-style: none;
+    padding: 8px 0 4px 0;
+    margin: 8px 0 0 0;
+    border-top: 1px dashed var(--border-soft);
+  }
+  .num-sublist > li {
+    font-size: 12.5px;
+    color: var(--text-2);
+    line-height: 1.65;
+    padding: 4px 0 4px 14px;
+    position: relative;
+  }
+  .num-sublist > li::before {
+    content: "·";
+    position: absolute;
+    left: 4px; top: 0;
+    color: var(--accent);
+    font-weight: 800;
+  }
+  .num-sublist > li strong {
+    color: var(--text-1);
+  }
+
+  /* A3 右侧案例图 */
+  .a3-case-row {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    flex-shrink: 0;
+    align-items: flex-start;
+  }
+  .a3-case-img {
+    width: 140px;
+    height: auto;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    object-fit: cover;
+  }
+
+  /* ============== Tips 小点配图 ============== */
+  .tip-item {
+    display: flex;
+    gap: 14px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-top: 10px;
+    align-items: flex-start;
+  }
+  .tip-item-text { flex: 1; min-width: 0; }
+  .tip-item-head {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-1);
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .tip-item-head .num {
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    width: 18px; height: 18px;
+    background: var(--primary);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .tip-card.ren .tip-item-head .num { background: #8b5cf6; }
+  .tip-card.huo .tip-item-head .num { background: var(--accent); }
+  .tip-card.chang .tip-item-head .num { background: var(--primary); }
+  .tip-sub {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .tip-sub li {
+    font-size: 12.5px;
+    color: var(--text-1);
+    line-height: 1.75;
+    padding: 5px 0 5px 14px;
+    position: relative;
+  }
+  .tip-sub li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 13px;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+  }
+  .tip-card.ren .tip-sub li::before { background: #8b5cf6; }
+  .tip-card.huo .tip-sub li::before { background: var(--accent); }
+  .tip-card.chang .tip-sub li::before { background: var(--primary); }
+  .tip-thumb {
+    width: 100px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    flex-shrink: 0;
+    background: #f8fafc;
+  }
+  .tip-thumb-cap {
+    font-size: 10px;
+    color: var(--text-2);
+    text-align: center;
+    margin-top: 4px;
+    line-height: 1.2;
+  }
+
+  /* ============== 阶段标签条 ============== */
+  .stage-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 24px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 6px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-soft);
+  }
+  .stage-tab {
+    flex: 1;
+    padding: 14px 18px;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-2);
+    cursor: default;
+    transition: all 0.15s;
+    position: relative;
+  }
+  .stage-tab.active {
+    background: linear-gradient(135deg, var(--primary), #4f8aff);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(26, 110, 255, 0.25);
+  }
+  .stage-tab.active.warm {
+    background: linear-gradient(135deg, var(--accent), var(--accent-warm));
+    box-shadow: 0 4px 12px rgba(255, 125, 0, 0.25);
+  }
+  .stage-tab.active.green {
+    background: linear-gradient(135deg, var(--success), #4ade80);
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
+  }
+  .stage-tab .stage-num {
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    width: 22px; height: 22px;
+    background: rgba(0,0,0,0.08);
+    color: var(--text-2);
+    font-size: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+    font-weight: 800;
+  }
+  .stage-tab.active .stage-num {
+    background: rgba(255,255,255,0.25);
+    color: #fff;
+  }
+  .stage-tab .stage-sub {
+    display: block;
+    font-size: 11px;
+    opacity: 0.7;
+    margin-top: 2px;
+    font-weight: 400;
+  }
+
+  /* ============== 阶段标题 ============== */
+  .stage-section {
+    margin-top: 28px;
+    margin-bottom: 16px;
+  }
+  .stage-section-head {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border-soft);
+  }
+  .stage-section-head .stage-label {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .stage-section-head .stage-label.A { background: var(--primary); }
+  .stage-section-head .stage-label.B { background: var(--accent); }
+  .stage-section-head .stage-label.C { background: #8b5cf6; }
+  .stage-section-head .stage-label.D { background: var(--success); }
+  .stage-section-head .stage-label.E { background: #d4a017; }
+  .stage-section-head h3 {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-1);
+  }
+  .stage-section-head .stage-desc {
+    font-size: 13px;
+    color: var(--text-2);
+    margin-left: auto;
+  }
+
+  /* ============== 门槛卡片行 ============== */
+  .threshold-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .threshold-card {
+    background: #fff;
+    border: 1px solid var(--border-soft);
+    border-radius: 12px;
+    padding: 16px 18px;
+    text-align: center;
+    position: relative;
+    transition: all 0.15s;
+  }
+  .threshold-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+  .threshold-card .th-label {
+    font-size: 12px;
+    color: var(--text-2);
+    margin-bottom: 6px;
+  }
+  .threshold-card .th-value {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1;
+    letter-spacing: -0.5px;
+    font-feature-settings: "tnum";
+  }
+  .threshold-card .th-value small {
+    font-size: 14px;
+    color: var(--text-2);
+    font-weight: 600;
+    margin-left: 2px;
+  }
+  .threshold-card .th-note {
+    font-size: 11px;
+    color: var(--text-3);
+    margin-top: 6px;
+  }
+
+  /* ============== 必做/可选 标签 ============== */
+  .tip-required, .tip-optional {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .tip-required {
+    background: var(--danger-bg);
+    color: var(--danger);
+  }
+  .tip-optional {
+    background: #eff6ff;
+    color: var(--primary);
+  }
+
+  /* ============== 配置模板代码块 ============== */
+  .code-block {
+    background: #f8fafc;
+    color: var(--text-1);
+    border-radius: 10px;
+    padding: 16px 18px;
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 13px;
+    line-height: 1.8;
+    overflow-x: auto;
+    margin-top: 12px;
+    border: 1px solid var(--border);
+  }
+  .code-block .ck-title {
+    color: var(--text-2);
+    font-size: 12px;
+    margin-bottom: 8px;
+    display: block;
+    font-weight: 600;
+  }
+  .code-block .ck-line { display: block; padding-left: 4px; }
+  .code-block .ck-key { color: var(--primary); font-weight: 600; }
+  .code-block .ck-val { color: var(--accent); font-weight: 500; }
+  .code-block .ck-comment { color: var(--text-3); font-size: 11.5px; }
+
+  /* ============== 内容卡片（更紧凑） ============== */
+  .compact-tip {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-soft);
+    margin-bottom: 14px;
+    border-left: 4px solid var(--primary);
+  }
+  .compact-tip.warm { border-left-color: var(--accent); }
+  .compact-tip.green { border-left-color: var(--success); }
+  .compact-tip.purple { border-left-color: #8b5cf6; }
+  .compact-tip.gold { border-left-color: #d4a017; }
+  .compact-tip-head {
+    display: flex; align-items: center;
+    margin-bottom: 10px;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .compact-tip-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-1);
+  }
+  .compact-tip-body {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text-1);
+  }
+  .compact-tip-body strong {
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .compact-tip-body .tag {
+    display: inline-block;
+    background: #f1f5f9;
+    color: var(--text-2);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 1px 8px;
+    border-radius: 4px;
+    margin: 0 2px;
+  }
+  .hl-blue {
+    background: #dbeafe;
+    color: #1e40af;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-weight: 600;
+  }
+  .hl-orange {
+    background: #ffedd5;
+    color: #c2410c;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-weight: 600;
+  }
+  .hl-green {
+    background: #dcfce7;
+    color: #166534;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-weight: 600;
+  }
+  .hl-purple {
+    background: #ede9fe;
+    color: #5b21b6;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-weight: 600;
+  }
+  .hl-red {
+    background: #fee2e2;
+    color: #b91c1c;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-weight: 600;
+  }
+  .node-badge {
+    display: inline-block;
+    background: var(--danger);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 1px 8px;
+    border-radius: 10px;
+    margin-right: 2px;
+    vertical-align: middle;
+  }
+  .scene-blue {
+    color: #1e40af;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: #93c5fd;
+    text-decoration-thickness: 2px;
+  }
+  .benefit-green {
+    color: #166534;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: #86efac;
+    text-decoration-thickness: 2px;
+  }
+  .copy-legend {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 12px;
+    color: var(--text-2);
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .copy-legend .dot {
+    display: inline-block;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+  .compact-tip-body ul {
+    margin: 8px 0 0 18px;
+  }
+  .compact-tip-body li {
+    margin-bottom: 4px;
+    line-height: 1.7;
+  }
+
+  /* 数字亮点 */
+  .num-highlight {
+    background: linear-gradient(135deg, #fff5e6, #ffe9c8);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    color: var(--accent);
+    font-feature-settings: "tnum";
+  }
+
+  /* 响应式 */
+  @media (max-width: 1024px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    .case-grid { grid-template-columns: 1fr; }
+    .case-img-wrap { min-height: 320px; border-right: none; border-bottom: 1px solid var(--border-soft); }
+    .grid-3 { grid-template-columns: 1fr; }
+    .threshold-row { grid-template-columns: repeat(2, 1fr); }
+    .stage-tabs { flex-direction: column; }
+  }
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 30px; }
+    .kpi-row { grid-template-columns: 1fr 1fr; }
+    .case-stats { grid-template-columns: 1fr; }
+    .threshold-row { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============== Hero ============== -->
+<header class="hero">
+  <div class="container">
+    <span class="hero-eyebrow">腾讯广告·消电日百中心 ｜ Q3 行业级直播大场 IP</span>
+    <h1>「鹅选美好生活月」<span class="highlight">阶段一</span><br>数据 & 优质 Case 分享</h1>
+    <p class="hero-sub">"人货场升级"打榜赛为牵引，三大节点串联 5 大时令节令，以"打榜+实战"驱动客户大场经营提效。阶段一「清凉美好节」7/20-7/26 已收官，下面同步数据、升级路径与优质案例，供后续场次参考复用。</p>
+
+    <div class="hero-stats">
+      <div class="hero-stat-item">
+        <div class="num">7<span style="font-size: 22px; opacity: 0.7;">天</span></div>
+        <div class="label">清凉美好节周期</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="num">20<span style="font-size: 22px; opacity: 0.7;">家</span></div>
+        <div class="label">参赛客户品牌</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="num">62<span style="font-size: 22px; opacity: 0.7;">场</span></div>
+        <div class="label">累计通过大场</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="num">9<span style="font-size: 22px; opacity: 0.7;">场/日</span></div>
+        <div class="label">日均通过密度</div>
+      </div>
+      <div class="hero-stat-item">
+        <div class="num">4<span style="font-size: 22px; opacity: 0.7;">阶段</span></div>
+        <div class="label">清凉 / 养生 / 焕新 / 收官</div>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item is-active">
+        <span class="tl-tag">当前</span>
+        <strong>清凉美好节</strong>
+        <span style="color: var(--text-2);">7/20 - 7/26</span>
+      </div>
+      <div class="tl-item">
+        <span class="tl-tag alt">下阶段</span>
+        <strong>养生美好节</strong>
+        <span style="color: var(--text-2);">7/28 - 8/9</span>
+      </div>
+      <div class="tl-item">
+        <span class="tl-tag warn">8/10 起</span>
+        <strong>焕新美好节</strong>
+        <span style="color: var(--text-2);">8/10 - 8/16</span>
+      </div>
+      <div class="tl-item">
+        <span class="tl-tag gold">收官</span>
+        <strong>收官盛典</strong>
+        <span style="color: var(--text-2);">8/14 - 8/16</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============== Nav ============== -->
+<nav class="nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#sec-1">① 清凉美好节数据同步</a>
+      <a href="#sec-2">② 人货场升级Tips</a>
+      <a href="#sec-3">③ 优质客户Case分析</a>
+      <a href="#sec-4">④ 后续大场必做Tips</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============== Section 1: 数据同步 ============== -->
+<section id="sec-1">
+  <div class="container">
+    <div class="sec-header">
+      <div class="sec-num">1</div>
+      <h2 class="sec-title">清凉美好节·数据同步 <span class="sec-tag">阶段一收官</span></h2>
+    </div>
+    <p class="sec-sub">覆盖 7/20-7/26 共 7 天 23 个客户品牌，从打榜赛提交数据与投放消耗双视角交叉看清凉节点的实战效果。</p>
+
+    <!-- 关键指标 -->
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-label">📝 大场通过总数</div>
+        <div class="kpi-num">62<small>场</small></div>
+        <div class="kpi-trend">7 天累计，<span class="up">日均 9 场</span></div>
+      </div>
+      <div class="kpi-card warm">
+        <div class="kpi-label">🏭 场升级占比</div>
+        <div class="kpi-num">51<small>%</small></div>
+        <div class="kpi-trend">展会 / 工厂 / 仓播 <span class="up">成主旋律</span></div>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label">👥 参与客户品牌</div>
+        <div class="kpi-num">20<small>家</small></div>
+        <div class="kpi-trend">覆盖厨具 / 个护 / 小家电 / 生活电器等多品类</div>
+      </div>
+      <div class="kpi-card purple">
+        <div class="kpi-label">🔥 单日峰值场次</div>
+        <div class="kpi-num">13<small>场/7/23</small></div>
+        <div class="kpi-trend">周中大场集中爆发 <span class="up">↑ 225%</span> vs 7/20</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <!-- 左：升级维度分布 -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title"><span class="dot warm"></span>升级维度分布</div>
+          <span class="pill info">62场合计</span>
+        </div>
+        <div>
+          <div class="dist-row">
+            <div class="dist-label">🏭 场升级</div>
+            <div class="dist-bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width: 100%;"></div></div></div>
+            <div class="dist-count">36 场 <span style="font-size:11px; color:var(--text-3);">51.4%</span></div>
+          </div>
+          <div class="dist-row">
+            <div class="dist-label">📦 货升级</div>
+            <div class="dist-bar-wrap"><div class="bar-bg"><div class="bar-fill green" style="width: 39%;"></div></div></div>
+            <div class="dist-count">14 场 <span style="font-size:11px; color:var(--text-3);">22.6%</span></div>
+          </div>
+          <div class="dist-row">
+            <div class="dist-label">👤 人升级</div>
+            <div class="dist-bar-wrap"><div class="bar-bg"><div class="bar-fill purple" style="width: 36%;"></div></div></div>
+            <div class="dist-count">13 场 <span style="font-size:11px; color:var(--text-3);">21.0%</span></div>
+          </div>
+        </div>
+        <div style="margin-top: 20px; padding: 14px; background: #f8fafc; border-radius: 10px;">
+          <div style="font-size: 12px; font-weight: 700; color: var(--text-2); margin-bottom: 8px;">头部活跃品牌 TOP5</div>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <span class="pill info">零点记忆 6场</span>
+            <span class="pill info">迈巴勒 6场</span>
+            <span class="pill info">聚量（康佳/苏泊尔/创维）6场</span>
+            <span class="pill info">贝曲宝 5场</span>
+            <span class="pill info">张小泉芭荷 5场</span>
+          </div>
+        </div>
+        <div style="margin-top: 12px; padding: 12px 14px; background: linear-gradient(135deg, #eff6ff, #dbeafe); border-radius: 8px; font-size: 13px; color: var(--primary); border-left: 3px solid var(--primary);">
+          📌 <strong>核心结论</strong>：场升级是阶段一绝对主旋律（占比超 <strong>51%</strong>），<strong>展会 / 工厂 / 仓播</strong> 三大新场景已覆盖过半数场次；货升级与清凉节点新品/赠品强关联，人升级以总裁/总监进播为主。
+        </div>
+      </div>
+
+      <!-- 右：每日提交趋势 -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title"><span class="dot"></span>每日大场提交趋势</div>
+          <span class="pill info">7/20-7/26</span>
+        </div>
+        <div>
+          <div class="dist-row">
+            <div class="dist-label">7/20 周日</div>
+            <div class="dist-bar-wrap"><div class="bar-bg"><div class="bar-fill warm" style="width: 31%;"></div></div></div>
+            <div class="dist-count">4 场</div>
+          </div>
+          <div class="dist-row">
+            <div class="dist-label">7/21 周一</div>
+            <div class="dist-bar-wrap"><div class="bar-bg"><div class="bar-fill warm" style="width: 62%;"></div></div></div>
+            <div class="dist-count">8 场</div>
+          </div>
+          <div class="dist-row">
+            <div class="dist-label">7/22 周二</div>
+            <div class="dist-bar-wrap"><div class="bar-bg"><div class="bar-fill warm" style="width: 85%;"></div></div></div>
+            <div class="dist-count">11 场</div>
+          </div>
+          <div class="dist-row">
+            <div class="dist-label">7/23 周三</div>
+            <div class="dist-bar-wrap"><div class="bar-bg"><div class="bar-fill warm" style="width: 100%;"></div></div></div>
+            <div class="dist-count">13 场 <span class="pill success">峰值</span></div>
+          </div>
+          <div class="dist-row">
+            <div class="dist-label">7/24 周四</div>
+            <div class="dist-bar-wrap"><div class="bar-bg"><div class="bar-fill warm" style="width: 85%;"></div></div></div>
+            <div class="dist-count">11 场</div>
+          </div>
+          <div class="dist-row">
+            <div class="dist-label">7/25 周五</div>
+            <div class="dist-bar-wrap"><div class="bar-bg"><div class="bar-fill warm" style="width: 77%;"></div></div></div>
+            <div class="dist-count">10 场</div>
+          </div>
+          <div class="dist-row">
+            <div class="dist-label">7/26 周六</div>
+            <div class="dist-bar-wrap"><div class="bar-bg"><div class="bar-fill warm" style="width: 38%;"></div></div></div>
+            <div class="dist-count">5 场</div>
+          </div>
+        </div>
+        <div style="margin-top: 16px; padding: 12px 14px; background: #f8fafc; border-radius: 8px; font-size: 13px; color: var(--text-2);">
+          💡 <strong>节点观察</strong>：活动首日为客户启动期，<strong>7/22-7/24</strong> 进入稳定爆发期，单日 11-13 场；7/25-7/26 逐步收官回落。
+        </div>
+      </div>
+    </div>
+
+    <!-- 客户消耗TOP榜 -->
+    <div class="card" style="margin-top: 20px;">
+      <div class="card-head">
+        <div class="card-title"><span class="dot green"></span>参赛客户 7 天消耗 TOP 榜</div>
+        <span class="pill info">数据来源：通用分析数据集</span>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width: 50px;">排名</th>
+            <th>客户品牌</th>
+            <th>视频号</th>
+            <th class="num-cell">7天总消耗</th>
+            <th class="num-cell">日均消耗</th>
+            <th class="num-cell">日均 CTR</th>
+            <th class="num-cell">日均 CVR</th>
+            <th class="num-cell">日均 ROI</th>
+            <th class="num-cell">消耗环比均值</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🥇</td>
+            <td class="brand-cell">聚量（康佳/苏泊尔/创维）</td>
+            <td>荣暖/倍宠/苏泊尔/创维 等 8 个号</td>
+            <td class="num-cell">100万+</td>
+            <td class="num-cell">15-20万</td>
+            <td class="num-cell">3.13%</td>
+            <td class="num-cell">4.56%</td>
+            <td class="num-cell">2.5-3.0</td>
+            <td class="num-cell"><span class="up">+5.6%</span></td>
+          </tr>
+          <tr>
+            <td>🥈</td>
+            <td class="brand-cell">宝家洁</td>
+            <td>宝家洁居家好物 / 品质好物</td>
+            <td class="num-cell">40-50万</td>
+            <td class="num-cell">5-10万</td>
+            <td class="num-cell">2.22%</td>
+            <td class="num-cell">12.55%</td>
+            <td class="num-cell">2.0-2.5</td>
+            <td class="num-cell"><span class="up">+70.9%</span></td>
+          </tr>
+          <tr>
+            <td>🥉</td>
+            <td class="brand-cell">欧洛德</td>
+            <td>欧洛德溪屿厨具</td>
+            <td class="num-cell">30-35万</td>
+            <td class="num-cell">3-5万</td>
+            <td class="num-cell">1.10%</td>
+            <td class="num-cell">3.47%</td>
+            <td class="num-cell">2.5-3.0</td>
+            <td class="num-cell"><span class="up">+116.7%</span></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td class="brand-cell">金正 / 禾兰仕</td>
+            <td>金正个护电器</td>
+            <td class="num-cell">20-25万</td>
+            <td class="num-cell">3-5万</td>
+            <td class="num-cell">3.01%</td>
+            <td class="num-cell">6.77%</td>
+            <td class="num-cell">2.5-3.0</td>
+            <td class="num-cell"><span class="up">+110.5%</span></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td class="brand-cell">三禾</td>
+            <td>三禾纯钛不粘锅</td>
+            <td class="num-cell">20-25万</td>
+            <td class="num-cell">3-5万</td>
+            <td class="num-cell">3.58%</td>
+            <td class="num-cell">1.52%</td>
+            <td class="num-cell">1.5-2.0</td>
+            <td class="num-cell"><span class="up">+2.7%</span></td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td class="brand-cell">张小泉创大</td>
+            <td>张小泉创大厨具店</td>
+            <td class="num-cell">15-20万</td>
+            <td class="num-cell">3-5万</td>
+            <td class="num-cell">2.05%</td>
+            <td class="num-cell">3.27%</td>
+            <td class="num-cell">3.0-3.5</td>
+            <td class="num-cell"><span class="up">+12.7%</span></td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td class="brand-cell">徕芬</td>
+            <td>徕芬</td>
+            <td class="num-cell">10-15万</td>
+            <td class="num-cell">1-3万</td>
+            <td class="num-cell">1.31%</td>
+            <td class="num-cell">2.47%</td>
+            <td class="num-cell">1.5-2.0</td>
+            <td class="num-cell"><span class="flat">持平</span></td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td class="brand-cell">极萌</td>
+            <td>极萌官方号</td>
+            <td class="num-cell">5-10万</td>
+            <td class="num-cell">1-3万</td>
+            <td class="num-cell">2.12%</td>
+            <td class="num-cell">0.86%</td>
+            <td class="num-cell">3.0-3.5</td>
+            <td class="num-cell"><span class="up">+52.0%</span></td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td class="brand-cell">迈巴勒</td>
+            <td>迈巴勒不粘锅直播间</td>
+            <td class="num-cell">5-10万</td>
+            <td class="num-cell">1万以下</td>
+            <td class="num-cell">1.50%</td>
+            <td class="num-cell">1.75%</td>
+            <td class="num-cell">2.0-2.5</td>
+            <td class="num-cell"><span class="up">+39.5%</span></td>
+          </tr>
+          <tr class="summary">
+            <td colspan="3">合计 / 均值（参赛客户）</td>
+            <td class="num-cell">300万+</td>
+            <td class="num-cell">—</td>
+            <td class="num-cell">2.50%</td>
+            <td class="num-cell">4.36%</td>
+            <td class="num-cell">2.5-3.0</td>
+            <td class="num-cell"><span class="up">+33.0%</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-top: 14px; padding: 8px 12px; background: #f8fafc; border-radius: 8px; font-size: 12px; color: var(--text-2); text-align: left; line-height: 1.7;">
+        <strong>口径说明</strong>:消耗与 ROI 已做区间化处理,日均指标已剔除空数据日;环比均值已剔除异常值 ∞</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== Section 2: 人货场 Tips ============== -->
+<section id="sec-2">
+  <div class="container">
+    <div class="sec-header">
+      <div class="sec-num">2</div>
+      <h2 class="sec-title">人货场升级 Tips <span class="sec-tag">从 62 场实战提炼</span></h2>
+    </div>
+    <p class="sec-sub">基于阶段一 23 个客户的实战升级路径，从"人/货/场"三个维度拆解可复用打法，每条 Tips 都对应一个或多个标杆客户。</p>
+
+    <div class="grid-3">
+      <!-- 人 -->
+      <div class="tip-card ren">
+        <div class="tip-icon">人</div>
+        <h3>人升级 · 让直播间"有故事"</h3>
+
+        <div class="tip-item">
+          <div class="tip-item-text">
+            <div class="tip-item-head"><span class="num">1</span>高势能 IP 亲临直播间</div>
+            <ul class="tip-sub">
+              <li>欧洛德厂长亲临,建立"匠人+匠品"叙事</li>
+              <li>张小泉营销总裁张总进直播间</li>
+              <li>停留时长与转化率显著提升</li>
+            </ul>
+            <div class="tip-thumb-cap">欧洛德 7/23 总裁驾到</div>
+          </div>
+          <img class="tip-thumb" src="case_images/欧洛德_07-23.png" alt="欧洛德总裁亲临">
+        </div>
+
+        <div class="tip-item">
+          <div class="tip-item-text">
+            <div class="tip-item-head"><span class="num">2</span>营销总监双人直播</div>
+            <ul class="tip-sub">
+              <li>零点记忆 7/24 营销总监进直播间</li>
+              <li>限时福利赠送枕套(赠品钩子)</li>
+              <li>提升专业感 + 停留时长</li>
+            </ul>
+            <div class="tip-thumb-cap">零点记忆 7/24 营销总监双人</div>
+          </div>
+          <img class="tip-thumb" src="case_images/零点记忆_07-24.png" alt="零点记忆 营销总监双人">
+        </div>
+
+        <div class="tip-item">
+          <div class="tip-item-text">
+            <div class="tip-item-head"><span class="num">3</span>达人 / KOC 借势放大</div>
+            <ul class="tip-sub">
+              <li>AeroBand 7/20 + 吉他姜老师带货</li>
+              <li>KOC 实测种草 + 主播出镜</li>
+              <li>场观峰值 1000+ 在线</li>
+            </ul>
+            <div class="tip-thumb-cap">AeroBand 7/20 KOC 姜老师</div>
+          </div>
+          <img class="tip-thumb" src="case_images/aeroband_07-20.png" alt="AeroBand KOC 姜老师">
+        </div>
+      </div>
+
+      <!-- 货 -->
+      <div class="tip-card huo">
+        <div class="tip-icon">货</div>
+        <h3>货升级 · 让"有理由下单"</h3>
+
+        <div class="tip-item">
+          <div class="tip-item-text">
+            <div class="tip-item-head"><span class="num">1</span>爆品新品首发(节点概念)</div>
+            <ul class="tip-sub">
+              <li>极萌"冰灌水光"清凉节专场</li>
+              <li>400元购物金兑美妆小冰箱</li>
+              <li>7/24 CVR 环比 <span class="up">+427%</span></li>
+            </ul>
+            <div class="tip-thumb-cap">极萌 7/22 冰灌水光</div>
+          </div>
+          <img class="tip-thumb" src="case_images/极萌_07-22.png" alt="极萌冰灌水光">
+        </div>
+
+        <div class="tip-item">
+          <div class="tip-item-text">
+            <div class="tip-item-head"><span class="num">2</span>赠品加码 / 套组升级</div>
+            <ul class="tip-sub">
+              <li>零点记忆 7/22 凝胶枕礼盒上新</li>
+              <li>赠品加码(枕套 / 福利)</li>
+              <li>礼赠双备,客单 + 复购双钩子</li>
+            </ul>
+            <div class="tip-thumb-cap">零点记忆 7/22 赠品加码</div>
+          </div>
+          <img class="tip-thumb" src="case_images/零点记忆_07-22.jpg" alt="零点记忆 赠品加码">
+        </div>
+
+        <div class="tip-item">
+          <div class="tip-item-text">
+            <div class="tip-item-head"><span class="num">3</span>包装 / 套组升级(礼盒装)</div>
+            <ul class="tip-sub">
+              <li>徕芬 7/22 爆品礼盒装吹风机上新</li>
+              <li>主打"送礼场景 + 清凉双品类"组合</li>
+              <li>客单价提升 + 复购钩子双备</li>
+            </ul>
+            <div class="tip-thumb-cap">徕芬 7/22 礼盒装吹风机</div>
+          </div>
+          <img class="tip-thumb" src="case_images/徕芬_07-22.jpeg" alt="徕芬 礼盒装吹风机">
+        </div>
+      </div>
+
+      <!-- 场 -->
+      <div class="tip-card chang">
+        <div class="tip-icon">场</div>
+        <h3>场升级 · 让"信任可视化"</h3>
+
+        <div class="tip-item">
+          <div class="tip-item-text">
+            <div class="tip-item-head"><span class="num">1</span>展会专场(借势节点)</div>
+            <ul class="tip-sub">
+              <li>张小泉创大 / 三禾 / 太力借上海百货展</li>
+              <li>百事水具 / 迈巴勒跟展</li>
+              <li>"实地可见" 比参数更动人</li>
+            </ul>
+            <div class="tip-thumb-cap">三禾 7/23 上海百货展</div>
+          </div>
+          <img class="tip-thumb" src="case_images/三禾_07-23.jpeg" alt="三禾展会专场">
+        </div>
+
+        <div class="tip-item">
+          <div class="tip-item-text">
+            <div class="tip-item-head"><span class="num">2</span>工厂溯源 / 仓播突破</div>
+            <ul class="tip-sub">
+              <li>金正/禾兰仕 7/25 仓播 5-10万 环比 +663%</li>
+              <li>欧洛德 / 迈巴勒工厂溯源</li>
+              <li>新场景 × 破价首发 双爆发</li>
+            </ul>
+            <div class="tip-thumb-cap">金正/禾兰仕 7/24 仓播</div>
+          </div>
+          <img class="tip-thumb" src="case_images/金正禾兰仕_07-24.png" alt="金正禾兰仕仓播">
+        </div>
+
+        <div class="tip-item">
+          <div class="tip-item-text">
+            <div class="tip-item-head"><span class="num">3</span>商超 / 线下场景进直播间</div>
+            <ul class="tip-sub">
+              <li>张小泉芭荷 / 贝曲宝 进线下</li>
+              <li>总裁亲临商超降福利</li>
+              <li>"所见即所得" 打破距离感</li>
+            </ul>
+            <div class="tip-thumb-cap">张小泉芭荷 7/24 线下商超</div>
+          </div>
+          <img class="tip-thumb" src="case_images/张小泉芭荷_07-24.jpg" alt="张小泉芭荷商超">
+        </div>
+      </div>
+    </div>
+
+    <!-- 三维联动 -->
+    <div class="card" style="margin-top: 20px;">
+      <div class="card-head">
+        <div class="card-title"><span class="dot warm"></span>人货场三维联动 · 标杆客户一览</div>
+        <span class="pill warn">三维全覆盖 = 高分项</span>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>客户</th>
+            <th>人</th>
+            <th>货</th>
+            <th>场</th>
+            <th class="num-cell">提交场次</th>
+            <th class="num-cell">三维覆盖</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="brand-cell">贝曲宝</td>
+            <td>✓ 营销总监进场</td>
+            <td>✓ 赠吨吨杯/新品</td>
+            <td>✓ 居家场景升级</td>
+            <td class="num-cell">5 场</td>
+            <td><span class="pill info">人货场全覆盖</span></td>
+          </tr>
+          <tr>
+            <td class="brand-cell">欧洛德</td>
+            <td>✓ 总裁/厂长驾到</td>
+            <td>✓ 小方锅+蒸笼套组</td>
+            <td>✓ 工厂溯源</td>
+            <td class="num-cell">4 场</td>
+            <td><span class="pill info">人货场全覆盖</span></td>
+          </tr>
+          <tr>
+            <td class="brand-cell">AeroBand</td>
+            <td>✓ 达人/KOC合作</td>
+            <td>✓ 粉色+声卡套装</td>
+            <td>✓ 家居客厅场景</td>
+            <td class="num-cell">4 场</td>
+            <td><span class="pill info">人货场全覆盖</span></td>
+          </tr>
+          <tr>
+            <td class="brand-cell">张小泉芭荷</td>
+            <td>✓ 总裁亲临</td>
+            <td>—</td>
+            <td>✓ 展会/商超/工厂</td>
+            <td class="num-cell">6 场</td>
+            <td><span class="pill warn">人场双维</span></td>
+          </tr>
+          <tr>
+            <td class="brand-cell">迈巴勒</td>
+            <td>—</td>
+            <td>—</td>
+            <td>✓ 工厂/展会连续升级</td>
+            <td class="num-cell">5 场</td>
+            <td><span class="pill warn">场单维深耕</span></td>
+          </tr>
+          <tr>
+            <td class="brand-cell">极萌</td>
+            <td>—</td>
+            <td>✓ 冰灌水光+小冰箱</td>
+            <td>✓ 冰山视觉专场</td>
+            <td class="num-cell">1 场</td>
+            <td><span class="pill warn">货场双维</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============== Section 3: 优质 Case ============== -->
+<section id="sec-3">
+  <div class="container">
+    <div class="sec-header">
+      <div class="sec-num">3</div>
+      <h2 class="sec-title">优质客户 Case 分析 <span class="sec-tag">7 个标杆</span></h2>
+    </div>
+    <p class="sec-sub">从参赛客户中按"消耗规模 + 环比增速 + 人货场三维"筛选 7 个最具代表性的 Case,配对真实大场截图与同期投放数据。消耗与 ROI 已做区间化处理,适合对外宣推。</p>
+
+    <!-- Case 1: 欧洛德 -->
+    <div class="case-card">
+      <div class="case-grid">
+        <div class="case-img-wrap">
+          <img src="case_images/欧洛德_07-23.png" alt="欧洛德 7/23 大场截图">
+          <div class="case-img-tag">7/23 总裁亲临大场</div>
+        </div>
+        <div class="case-body">
+          <div class="case-head">
+            <div class="case-brand">欧洛德溪屿厨具 <span class="badge">消耗环比 +116.7%</span></div>
+          </div>
+          <div class="case-meta">
+            <span>视频号：欧洛德溪屿厨具</span>
+            <span>品类：钛瓷小方锅</span>
+            <span>参赛：4 场</span>
+          </div>
+          <div class="case-tag-row">
+            <span class="case-tag ren">👤 总裁/厂长驾到</span>
+            <span class="case-tag huo">📦 小方锅+蒸笼套组</span>
+            <span class="case-tag chang">🏭 工厂溯源场景</span>
+          </div>
+
+          <div class="case-stats">
+            <div class="case-stat">
+              <div class="stat-label">7/22 峰值消耗</div>
+              <div class="stat-value">5-10万</div>
+              <div class="stat-trend up">↑ 209% 环比</div>
+            </div>
+            <div class="case-stat">
+              <div class="stat-label">7天日均 CVR</div>
+              <div class="stat-value">3.47%</div>
+              <div class="stat-trend up">↑ 18% 周均</div>
+            </div>
+            <div class="case-stat">
+              <div class="stat-label">7天日均 ROI</div>
+              <div class="stat-value">2.5-3.0</div>
+              <div class="stat-trend up">稳居高位</div>
+            </div>
+          </div>
+
+          <div class="case-section">
+            <div class="case-section-label">🎯 升级动作（重点:人 + 场）</div>
+            <ul>
+              <li><strong>【人】</strong>欧洛德厂长亲临直播间,7/23 大场再叠加"总裁亲临+主理人互动",建立"匠人 + 匠品"叙事,停留时长与转化率显著抬升</li>
+              <li><strong>【场】</strong>从常规直播间升级为"工厂溯源"背景,让"看得见"的生产线成为信任锚点,成为阶段一最有视觉冲击力的场升级</li>
+              <li><strong>【货】</strong>基于客服反馈,工厂开模升级 <strong>"小方锅+蒸笼"套餐</strong>(次要升级)</li>
+            </ul>
+          </div>
+          <div class="case-section">
+            <div class="case-section-label">数据看点</div>
+            <p>7 天总消耗 <strong>30万+</strong>，消耗环比均值 <span class="up"><strong>+116.7%</strong></span>（参赛客户第一）。7/22 单日峰值 <strong>5-10万</strong>，环比 <span class="up"><strong>+209%</strong></span>，同期 CTR 环比 +28%、CVR 环比 +22%，"人+场"双轮驱动效果显著。</p>
+          </div>
+          <div class="case-section">
+            <div class="case-section-label highlight-label">借鉴 highlight</div>
+            <div class="highlight-body">
+              <strong>可复用点</strong>:① 凡是品牌有"创始人/厂长/总裁"资源的客户,优先安排在清凉节点大场;"匠人 IP"对停留时长和信任感的撬动极强<br>
+              <strong>复制门槛</strong>:中低(无需新货品,只需协调人物档期);<strong>适配客户</strong>:有创始人/二代/家族 IP 背景的品牌(如家电、厨具、个护)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 2: 金正/禾兰仕 -->
+    <div class="case-card">
+      <div class="case-grid">
+        <div class="case-img-wrap">
+          <img src="case_images/金正禾兰仕_07-24.png" alt="金正/禾兰仕 7/24 仓播截图">
+          <div class="case-img-tag">7/24 工厂仓播</div>
+        </div>
+        <div class="case-body">
+          <div class="case-head">
+            <div class="case-brand">金正 / 禾兰仕 <span class="badge">单日 +663%</span></div>
+          </div>
+          <div class="case-meta">
+            <span>视频号：金正个护电器</span>
+            <span>品类：真空封口机 / 收纳</span>
+            <span>参赛：2 场（7/24+7/25）</span>
+          </div>
+          <div class="case-tag-row">
+            <span class="case-tag chang">🏭 仓播形式（全新）</span>
+            <span class="case-tag huo">📦 真空封口机破价首发</span>
+          </div>
+
+          <div class="case-stats">
+            <div class="case-stat">
+              <div class="stat-label">7/25 爆发消耗</div>
+              <div class="stat-value">5-10万</div>
+              <div class="stat-trend up">↑ 663% 环比</div>
+            </div>
+            <div class="case-stat">
+              <div class="stat-label">7天日均 CVR</div>
+              <div class="stat-value">6.77%</div>
+              <div class="stat-trend up">↑ 50% 7/25</div>
+            </div>
+            <div class="case-stat">
+              <div class="stat-label">7天日均 ROI</div>
+              <div class="stat-value">2.5-3.0</div>
+              <div class="stat-trend up">稳步抬升</div>
+            </div>
+          </div>
+
+          <div class="case-section">
+            <div class="case-section-label">🎯 升级动作（重点:场 - 仓播）</div>
+            <ul>
+              <li><strong>【场】</strong>7/24-7/25 首次采用 <strong>"仓库实景仓播"</strong>形式,真实货品堆头 + 真空封口机生产实景,7/25 仓播第二天单日 5-10万 环比 <span class="up"><strong>+663%</strong></span></li>
+              <li><strong>【货】</strong>航天密封技术·钛瓷封口机"破价首发",赠 8 个中号真空袋,大场专属福利(价格 + 赠品 双让利)</li>
+              <li><strong>【人】</strong>同步挂载鹅选官方贴片,享受平台流量加权(场升级的流量增益器)</li>
+            </ul>
+          </div>
+          <div class="case-section">
+            <div class="case-section-label">数据看点</div>
+            <p>7 天总消耗 <strong>20万+</strong>,消耗环比均值 <span class="up"><strong>+110.5%</strong></span>。7/25 单日 <strong>5-10万</strong> 爆发,环比 <span class="up"><strong>+663%</strong></span>,CVR 同步环比 <span class="up"><strong>+50%</strong></span> 突破 6.9%——<strong>新场景 × 破价首发 × 官方贴片</strong> 三件套打出了 1+1+1&gt;3 的效果。</p>
+          </div>
+          <div class="case-section">
+            <div class="case-section-label highlight-label">借鉴 highlight</div>
+            <div class="highlight-body">
+              <strong>可复用点</strong>:① 凡是品牌有真实仓库/工厂/线下货架实景的,都可尝试"仓播"形式——信任感比精修直播间更强<br>
+              <strong>复制门槛</strong>:中(需协调仓库拍摄档期 + 破价机制);<strong>适配客户</strong>:有线下仓/工厂/门店的家电/家居品牌(如个护、厨电、收纳)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 3: 三禾 -->
+    <div class="case-card">
+      <div class="case-grid">
+        <div class="case-img-wrap">
+          <img src="case_images/三禾_07-23.jpeg" alt="三禾 7/23 展会截图">
+          <div class="case-img-tag">7/23 上海百货展</div>
+        </div>
+        <div class="case-body">
+          <div class="case-head">
+            <div class="case-brand">三禾纯钛不粘锅 <span class="badge">CVR +97.5%</span></div>
+          </div>
+          <div class="case-meta">
+            <span>视频号：三禾纯钛不粘锅</span>
+            <span>品类：纯钛炒锅 / 厨具</span>
+            <span>参赛：2 场</span>
+          </div>
+          <div class="case-tag-row">
+            <span class="case-tag chang">🏛️ 上海百货展专场</span>
+            <span class="case-tag huo">📦 纯钛不粘锅升级</span>
+            <span class="case-tag ren">👤 官方贴片物料</span>
+          </div>
+
+          <div class="case-stats">
+            <div class="case-stat">
+              <div class="stat-label">7/25 峰值消耗</div>
+              <div class="stat-value">5-10万</div>
+              <div class="stat-trend up">↑ 97% 环比</div>
+            </div>
+            <div class="case-stat">
+              <div class="stat-label">7/25 CVR 环比</div>
+              <div class="stat-value">+97.5%</div>
+              <div class="stat-trend up">突破 2.23%</div>
+            </div>
+            <div class="case-stat">
+              <div class="stat-label">7天日均 ROI</div>
+              <div class="stat-value">1.5-2.0</div>
+              <div class="stat-trend up">持续抬升</div>
+            </div>
+          </div>
+
+          <div class="case-section">
+            <div class="case-section-label">🎯 升级动作（重点:场 + 货）</div>
+            <ul>
+              <li><strong>【场】</strong>7/23 借势上海百货展,把直播间搬到展会现场(展位号 N3A27),让"百万微纳米微孔锅体"实地可见,7/24-7/25 展会持续承接流量</li>
+              <li><strong>【货】</strong>主打"纯钛不粘 + 100 项专利 + 不添加涂层"三大卖点,做"卖点-参数-实测"三段式讲解,把"材质升级"讲透</li>
+              <li><strong>【贴片】</strong>加挂鹅选官方贴片,场观较未挂载提升 <strong>30%</strong>(客户自述) — 流量加权器</li>
+            </ul>
+          </div>
+          <div class="case-section">
+            <div class="case-section-label">数据看点</div>
+            <p>7 天总消耗 <strong>20万+</strong>。7/24-7/25 连续两天爆发:<strong>7/24 消耗 5-10万 +67.7%</strong>,<strong>7/25 消耗 5-10万 +97.2%</strong>,CVR 同步从 1.4% 抬升至 2.23%,环比 <span class="up"><strong>+97.5%</strong></span>——展会场景的"信任感"持续转化为转化率。</p>
+          </div>
+          <div class="case-section">
+            <div class="case-section-label highlight-label">借鉴 highlight</div>
+            <div class="highlight-body">
+              <strong>可复用点</strong>:① 凡是品牌有"独家卖点/技术专利/材质差异化"的,搭配展会场景效果最好(把"看不见的参数"变成"摸得到的产品")<br>
+              <strong>复制门槛</strong>:中(需找到对应节点展会 + 准备物料);<strong>适配客户</strong>:有独家工艺/材质的品牌(如厨电、个护、家居)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 4: 极萌 -->
+    <div class="case-card">
+      <div class="case-grid">
+        <div class="case-img-wrap">
+          <img src="case_images/极萌_07-22.png" alt="极萌 7/22 冰灌水光专场">
+          <div class="case-img-tag">7/22 冰灌水光专场</div>
+        </div>
+        <div class="case-body">
+          <div class="case-head">
+            <div class="case-brand">极萌 <span class="badge">CVR 环比 +427%</span></div>
+          </div>
+          <div class="case-meta">
+            <span>视频号：极萌官方号</span>
+            <span>品类：美容仪 / 大排灯</span>
+            <span>参赛：1 场（标杆）</span>
+          </div>
+          <div class="case-tag-row">
+            <span class="case-tag chang">❄️ 冰山视觉降温</span>
+            <span class="case-tag huo">📦 冰灌水光套装 + 小冰箱</span>
+            <span class="case-tag ren">💰 400元购物金</span>
+          </div>
+
+          <div class="case-stats">
+            <div class="case-stat">
+              <div class="stat-label">7/24 峰值消耗</div>
+              <div class="stat-value">1-3万</div>
+              <div class="stat-trend up">↑ 147% 环比</div>
+            </div>
+            <div class="case-stat">
+              <div class="stat-label">7/24 CVR 环比</div>
+              <div class="stat-value">+427%</div>
+              <div class="stat-trend up">突破 1.04%</div>
+            </div>
+            <div class="case-stat">
+              <div class="stat-label">7天日均 ROI</div>
+              <div class="stat-value">3.0-3.5</div>
+              <div class="stat-trend up">TOP3 客户</div>
+            </div>
+          </div>
+
+          <div class="case-section">
+            <div class="case-section-label">🎯 升级动作（重点:货 + 场）</div>
+            <ul>
+              <li><strong>【货】</strong>紧扣"清凉"节点,以 <strong>"冰灌水光"</strong> 概念做专场,400元购物金可兑换 <strong>价值699元美妆小冰箱</strong>,小家电+美妆品类联动拉高客单</li>
+              <li><strong>【场】</strong>直播间用冰山/冰水视觉做降温感,精准匹配暑期"晒后修护"需求,场景与品类高度契合</li>
+              <li><strong>【贴片】</strong>强调"2025年度抗衰美容仪 销量第1名",用消费决策锚点提升转化</li>
+            </ul>
+          </div>
+          <div class="case-section">
+            <div class="case-section-label">数据看点</div>
+            <p>7 天总消耗 <strong>5-10万</strong>。单场大场带来的数据拐点极为显著:<strong>7/24 消耗环比 +147%、CVR 环比 +427%</strong>——是阶段一"场域+货品"双升级带动转化率指数级抬升的标杆案例。<strong>ROI 3.0-3.5</strong> 在参赛客户中 TOP3。</p>
+          </div>
+          <div class="case-section">
+            <div class="case-section-label highlight-label">借鉴 highlight</div>
+            <div class="highlight-body">
+              <strong>可复用点</strong>:① 节点概念包装(冰灌水光/清凉节/养生节)可大幅提升 CVR;② "主品 + 赠品价值锚定"(699元小冰箱)是性价比感知的杀手锏<br>
+              <strong>复制门槛</strong>:中(需围绕节气/节点做产品概念包装);<strong>适配客户</strong>:季节属性强的品类(美妆/家电/食品/服饰)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 5: 张小泉创大 -->
+    <div class="case-card">
+      <div class="case-grid">
+        <div class="case-img-wrap">
+          <img src="case_images/张小泉创大_07-23.png" alt="张小泉创大 7/23 非遗品牌日">
+          <div class="case-img-tag">7/23 张小泉非遗品牌日</div>
+        </div>
+        <div class="case-body">
+          <div class="case-head">
+            <div class="case-brand">张小泉创大厨具 <span class="badge">CTR 环比 +31%</span></div>
+          </div>
+          <div class="case-meta">
+            <span>视频号：张小泉创大厨具店</span>
+            <span>品类：刀具 / 厨具</span>
+            <span>参赛：5 场</span>
+          </div>
+          <div class="case-tag-row">
+            <span class="case-tag chang">🏛️ 展会专场 + 商超</span>
+            <span class="case-tag ren">🎤 品牌大使林永健</span>
+            <span class="case-tag huo">📦 黑金刚极铁锅</span>
+          </div>
+
+          <div class="case-stats">
+            <div class="case-stat">
+              <div class="stat-label">7/22 峰值消耗</div>
+              <div class="stat-value">3-5万</div>
+              <div class="stat-trend up">↑ 97% 环比</div>
+            </div>
+            <div class="case-stat">
+              <div class="stat-label">7/22 CTR 环比</div>
+              <div class="stat-value">+31%</div>
+              <div class="stat-trend up">突破 2.18%</div>
+            </div>
+            <div class="case-stat">
+              <div class="stat-label">7天日均 ROI</div>
+              <div class="stat-value">3.0-3.5</div>
+              <div class="stat-trend up">TOP2 客户</div>
+            </div>
+          </div>
+
+          <div class="case-section">
+            <div class="case-section-label">🎯 升级动作（重点:人 + 场）</div>
+            <ul>
+              <li><strong>【人】</strong>邀请 <strong>张小泉营销总裁张总 + 品牌大使林永健</strong> 亲临直播间,398年非遗品牌力 + 国民明星 IP 双背书,氛围与客单双提升</li>
+              <li><strong>【场】</strong>7/22-7/24 连续三天借势上海百货展,直播间搬到展会现场;7/24 升级为"萧山万象汇周年庆"线下场景</li>
+              <li><strong>【货】</strong>黑金刚极铁锅首销 + 价值 59 元刀具剪套装限时送(为客单+溢价做支撑)</li>
+            </ul>
+          </div>
+          <div class="case-section">
+            <div class="case-section-label">数据看点</div>
+            <p>7 天总消耗 <strong>15-20万</strong>,7/22-7/24 连续三天大场。7/22 单日消耗 <strong>3-5万 +97%</strong>,7/23 持续维持 <strong>1-3万 +104%</strong>;CTR 连续两天 <span class="up"><strong>+20%~31%</strong></span>。高 ROI 3.0-3.5 反映"品牌资产 + 展会场景 + 明星大使"的三重溢价。</p>
+          </div>
+          <div class="case-section">
+            <div class="case-section-label highlight-label">借鉴 highlight</div>
+            <div class="highlight-body">
+              <strong>可复用点</strong>:① 凡是品牌有"品牌大使/明星代言"的客户,大场务必安排大使进直播间;② 百年品牌/老字号与明星 IP 结合可放大"信任+溢价"双引擎<br>
+              <strong>复制门槛</strong>:高(需协调明星档期 + 议价);<strong>适配客户</strong>:有代言人/大使合作的品牌(如家电、个护、服饰)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 6: 迈巴勒 -->
+    <div class="case-card">
+      <div class="case-grid">
+        <div class="case-img-wrap">
+          <img src="case_images/迈巴勒_07-23.jpg" alt="迈巴勒 7/23 展会截图">
+          <div class="case-img-tag">7/23 上海展会专场</div>
+        </div>
+        <div class="case-body">
+          <div class="case-head">
+            <div class="case-brand">迈巴勒不粘锅 <span class="badge">连续 5 场大场</span></div>
+          </div>
+          <div class="case-meta">
+            <span>视频号：迈巴勒不粘锅直播间</span>
+            <span>品类：不粘锅 / 厨具</span>
+            <span>参赛：5 场（每天一场）</span>
+          </div>
+          <div class="case-tag-row">
+            <span class="case-tag chang">🏭→🏛️ 工厂→展会连续升级</span>
+            <span class="case-tag huo">📦 钛极岩不粘锅</span>
+            <span class="case-tag ren">🎁 官方补贴活动</span>
+          </div>
+
+          <div class="case-stats">
+            <div class="case-stat">
+              <div class="stat-label">7/23 峰值消耗</div>
+              <div class="stat-value">1-3万</div>
+              <div class="stat-trend up">↑ 121% 环比</div>
+            </div>
+            <div class="case-stat">
+              <div class="stat-label">7/25 二次爆发</div>
+              <div class="stat-value">1-3万</div>
+              <div class="stat-trend up">↑ 144% 环比</div>
+            </div>
+            <div class="case-stat">
+              <div class="stat-label">7天日均 ROI</div>
+              <div class="stat-value">2.0-2.5</div>
+              <div class="stat-trend up">稳定抬升</div>
+            </div>
+          </div>
+
+          <div class="case-section">
+            <div class="case-section-label">🎯 升级动作（重点:场 - 连续升级）</div>
+            <ul>
+              <li><strong>【场】</strong>7 天 5 场,场景"日更一":工厂溯源(7/21) → 工厂升级(7/22) → 上海展会(7/23-7/24) → 工厂+补贴(7/25),7 天内把"工厂/展会/补贴"三类场景全部走通</li>
+              <li><strong>【货】</strong>钛极岩不粘锅 + 工厂补贴 + 平台补贴组合,贴片二次更新,氛围感持续强化</li>
+              <li><strong>【节奏】</strong>"日更一场景"是中小客户的差异化打法,避免场观疲劳</li>
+            </ul>
+          </div>
+          <div class="case-section">
+            <div class="case-section-label">数据看点</div>
+            <p>7 天总消耗 <strong>5-10万</strong>(规模小但增速猛),消耗环比均值 <span class="up"><strong>+39.5%</strong></span>。<strong>7/23 上海展会首日 1-3万 +121%</strong>、<strong>7/25 工厂+补贴 1-3万 +144%</strong>——两段峰值间隔 2 天,<strong>"场景切换 + 补贴叠加"</strong> 节奏精准。对中小客户做连续大场是优秀范本。</p>
+          </div>
+          <div class="case-section">
+            <div class="case-section-label highlight-label">借鉴 highlight</div>
+            <div class="highlight-body">
+              <strong>可复用点</strong>:① 中小客户可借鉴"日更一场景"节奏,7 天不重复;② 工厂+展会+补贴 三类场景可组合切换;③ 贴片"二次更新"是低成本氛围增强术<br>
+              <strong>复制门槛</strong>:低(只需协调不同拍摄场地);<strong>适配客户</strong>:预算/规模中小的客户(<10万/日预算),可参考此"轻量化连续大场"节奏
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case 7: 聚量 -->
+    <div class="case-card">
+      <div class="case-grid">
+        <div class="case-img-wrap">
+          <img src="case_images/聚量_07-23.png" alt="聚量 7/23 负离子驱蚊循环扇升级">
+          <div class="case-img-tag">7/23 负离子驱蚊循环扇升级</div>
+        </div>
+        <div class="case-body">
+          <div class="case-head">
+            <div class="case-brand">聚量（康佳/苏泊尔/创维） <span class="badge">家电数码组 · 货+场双升级</span></div>
+          </div>
+          <div class="case-meta">
+            <span>视频号:荣暖生活电器(聚量主力号)</span>
+            <span>品类:循环扇 / 小家电</span>
+            <span>参赛:6 场</span>
+          </div>
+          <div class="case-tag-row">
+            <span class="case-tag huo">📦 循环扇痛点升级(负离子+驱蚊)</span>
+            <span class="case-tag chang">🏛️ 清凉节场景包装</span>
+            <span class="case-tag ren">🏷️ 鹅选官方贴片加持</span>
+          </div>
+
+          <div class="case-stats">
+            <div class="case-stat">
+              <div class="stat-label">7/23 主力号峰值消耗</div>
+              <div class="stat-value">5-10万</div>
+              <div class="stat-trend up">↑ 140% 环比</div>
+            </div>
+            <div class="case-stat">
+              <div class="stat-label">7天集团日均 CVR</div>
+              <div class="stat-value">4.56%</div>
+              <div class="stat-trend up">家电数码 TOP</div>
+            </div>
+            <div class="case-stat">
+              <div class="stat-label">7天集团日均 ROI</div>
+              <div class="stat-value">2.5-3.0</div>
+              <div class="stat-trend up">稳健高位</div>
+            </div>
+          </div>
+
+          <div class="case-section">
+            <div class="case-section-label">🎯 升级动作(重点:货 + 场)</div>
+            <ul>
+              <li><strong>【货】</strong>产品本身未做大改,但 <strong>强调的痛点/卖点重新定位</strong>:从"夏日电风扇"升级为"夏季健康小家电",把负离子 + 驱蚊作为新卖点,提升客单与溢价</li>
+              <li><strong>【场】</strong>清凉节场景包装(负离子 + 驱蚊与夏季健康心智强关联),贴片直接展示卖点,可视化打动</li>
+              <li><strong>【集团作战】</strong>聚量旗下 8 个视频号协同跑量(荣暖生活电器为 7/23 主力爆发号,7 天集团总消耗 100万+)</li>
+            </ul>
+          </div>
+          <div class="case-section">
+            <div class="case-section-label">数据看点</div>
+            <p>7 天集团总消耗 <strong>100万+</strong>,荣暖 7/23 单日峰值 <strong>5-10万 环比 ↑ 140%</strong>。同期集团 <strong>日均 CVR 4.56%</strong>、<strong>日均 ROI 2.5-3.0</strong>。<strong>"同款产品痛点升级 + 集团多号协同"</strong> 验证了大型客户在大场期的跑量优势。</p>
+          </div>
+          <div class="case-section">
+            <div class="case-section-label highlight-label">借鉴 highlight</div>
+            <div class="highlight-body">
+              <strong>可复用点</strong>:① <strong>同款产品痛点/卖点重塑</strong>形成差异化卖点(循环扇→夏季健康小家电),不需新研发;② 集团多号协同跑量,主力号集中爆发<br>
+              <strong>复制门槛</strong>:中(需卖点重新提炼 + 集团矩阵资源);<strong>适配客户</strong>:多产品线、多视频号的集团型客户(如聚量/倍宠系、康佳系、苏泊尔系)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============== Section 4: 后续大场必做 Tips（强化版） ============== -->
+<section id="sec-4">
+  <div class="container">
+    <div class="sec-header">
+      <div class="sec-num">4</div>
+      <h2 class="sec-title">后续大场必做 Tips <span class="sec-tag">投前 · 投中 · 投后</span></h2>
+    </div>
+
+    <!-- 阶段标签条 -->
+    <div class="stage-tabs">
+      <div class="stage-tab active">
+        <span class="stage-num">A</span>投前必备
+        <span class="stage-sub">起量秘籍 · 5 条</span>
+      </div>
+      <div class="stage-tab active warm">
+        <span class="stage-num">B</span>投放量级
+        <span class="stage-sub">基建门槛</span>
+      </div>
+      <div class="stage-tab active" style="background: linear-gradient(135deg, #8b5cf6, #c084fc); color: #fff; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25);">
+        <span class="stage-num">C</span>产品工具
+        <span class="stage-sub">大场速推 / 智投</span>
+      </div>
+      <div class="stage-tab active green">
+        <span class="stage-num">D</span>投中操作
+        <span class="stage-sub">早场出价 + 盯盘</span>
+      </div>
+      <div class="stage-tab active" style="background: linear-gradient(135deg, #d4a017, #facc15); color: #fff; box-shadow: 0 4px 12px rgba(212, 160, 23, 0.25);">
+        <span class="stage-num">E</span>投后复盘
+        <span class="stage-sub">分时数据 + 切片反哺</span>
+      </div>
+    </div>
+
+    <!-- ============== A. 投前必备起量秘籍 ============== -->
+    <div class="stage-section">
+      <div class="stage-section-head">
+        <span class="stage-label A">A</span>
+        <h3>投前必备 · 起量秘籍</h3>
+      </div>
+
+      <!-- A1 创意 -->
+      <div class="compact-tip">
+        <div class="compact-tip-head">
+          <span class="tip-required">必做</span>
+          <span class="compact-tip-title">A1 · 创意 — 节点贯穿五段融入</span>
+          <span class="pill success">头部大场创意 CTR 环比 +13%</span>
+        </div>
+        <div class="compact-tip-body">
+          <div style="display: flex; gap: 16px; align-items: flex-start;">
+            <div style="flex: 1; min-width: 0;">
+              直播间创意按"开头炸 / 中段留 / 报价值 / 促单快 / 曝光广"五段分段融入大场元素,每段都必须有"机制/场景/价值/福利/曝光"五要素之一。
+              <ul>
+                <li><strong>① 开头炸</strong>:<span class="num-highlight">炸裂机制</span>开场,85折补贴 + 平台券 + 黄金三秒抓人(如"现在赶大场")</li>
+                <li><strong>② 中段留</strong>:<span class="num-highlight">场景化</span>带大场(种草留人),把"日常品"嵌入"大场场景"</li>
+                <li><strong>③ 报价值</strong>:<span class="num-highlight">明星/口播报价</span>,"直降千元到手价" — 信任放大</li>
+                <li><strong>④ 促单快</strong>:<span class="num-highlight">营销组件强调</span>,组件大场表达,挂钩福利,缩短决策</li>
+                <li><strong>⑤ 曝光广</strong>:<span class="num-highlight">AIGC resize 模板</span>,多版位凸显,公私域协同</li>
+              </ul>
+              <div style="margin-top: 8px; padding: 10px 12px; background: #f0fdf4; border-radius: 8px; font-size: 13px; color: var(--success); border-left: 3px solid var(--success);">
+                💡 <strong>核心收益</strong>:头部直播间大场类型创意 <strong>CTR 环比 +13%</strong>;有消耗创意数 <strong>翻倍 +46%</strong>;直播间商品点击率环比 <strong>+35%</strong>
+              </div>
+            </div>
+            <img src="case_images/livestream_creative_5steps.jpg" alt="标杆大场创意案例(五段融入)" style="width: 520px; height: auto; border-radius: 8px; border: 1px solid var(--border); flex-shrink: 0;">
+          </div>
+        </div>
+      </div>
+
+      <!-- A2 文案 -->
+      <div class="compact-tip warm">
+        <div class="compact-tip-head">
+          <span class="tip-required">必做</span>
+          <span class="compact-tip-title">A2 · 文案 — 大场 + 具体场景/产品利益</span>
+        </div>
+        <div class="compact-tip-body">
+          节点文案 = <span class="num-highlight">大场</span> + <span class="num-highlight">具体场景</span> + <span class="num-highlight">产品利益</span> 三件套,避免"大场+促销"的空话式文案。
+
+          <div class="copy-legend" style="margin-top: 10px;">
+            <strong>优质高 CTR 文案 Case</strong>
+            <span><span class="dot" style="background: var(--danger);"></span>大场</span>
+            <span><span class="dot" style="background: #93c5fd;"></span>具体场景</span>
+            <span><span class="dot" style="background: #86efac;"></span>产品利益</span>
+          </div>
+          <ul>
+            <li><span class="node-badge">大场</span> 促销+卖点融合:<span class="scene-blue">果蔬净化机"流速淳淳流清"</span>,<span class="benefit-green">一键净享健康安心</span>;<span class="scene-blue">挂烫机"大场老婆抢的"</span>,<span class="benefit-green">熨完衬衫穿三天</span></li>
+            <li><span class="node-badge">大场</span> 情感+人群向:<span class="scene-blue">按摩仪"给爸爸买一个"</span>,<span class="benefit-green">不担心腰酸问题</span>;<span class="scene-blue">炒锅"求购爸爸,就送它"</span>,<span class="benefit-green">无痛又良众</span></li>
+            <li><span class="node-badge">大场</span> 场景化关联:<span class="scene-blue">便携风扇"大场放假出门带遮阳伞还是防晒衣"</span>,<span class="benefit-green">当然要带这个风扇,省心又凉爽</span></li>
+          </ul>
+          <div style="margin-top: 10px; padding: 10px 12px; background: #fff8e6; border-radius: 8px; font-size: 13px; border-left: 3px solid var(--accent);">
+            ⚠️ 避免纯「大场+促销」空话式文案,3C 重视 <strong>大场 + 具体场景/产品利益</strong> 三件套融合
+          </div>
+        </div>
+      </div>
+
+      <!-- A3 直播间运营&话术 -->
+      <div class="compact-tip purple">
+        <div class="compact-tip-head">
+          <span class="tip-required">必做</span>
+          <span class="compact-tip-title">A3 · 直播间运营 & 话术</span>
+        </div>
+        <div class="compact-tip-body">
+
+          <strong>直播间主播话术设计框架</strong>(开图 1,4 轮讲解核心 + 开场话术 + 留人技巧):
+          <img src="case_images/livestream_script_framework.png" class="tip-framework" alt="直播间主播话术设计框架">
+
+          <strong style="display: block; margin-top: 16px; font-size: 14px;">需要重点注意:</strong>
+
+          <ol class="tip-numlist">
+            <li style="display: flex; gap: 16px; align-items: flex-start;">
+              <div style="flex: 1; min-width: 0;">
+                <strong>场景的特殊福利价值</strong>
+                <div class="num-desc">通过主播 KT 版等方式标明目前大场特惠机制,或赠送 xxx 专属福利</div>
+                <ul class="num-sublist">
+                  <li><strong>KT 版呈现</strong>:主播身后立牌/贴片用大字号标出"今日下单送 XX / 限时特惠 X 折",用户进直播间 3 秒内即可识别"大场专属"</li>
+                  <li><strong>话术模板</strong>:"今天来我直播间,大场专享,买 XX 送 XX,这个价格全网只有这里有"——反复强化稀缺感</li>
+                  <li><strong>参考案例</strong>:欧洛德总裁驾到专属福利、友望 10 周年店庆 1 折优惠明示、聚量"送沥水篮"组合</li>
+                </ul>
+              </div>
+              <div class="a3-case-row">
+                <img src="case_images/a3_welfare_1.png" alt="福利示意1" class="a3-case-img">
+                <img src="case_images/a3_welfare_2.png" alt="福利示意2" class="a3-case-img">
+                <img src="case_images/a3_welfare_3.png" alt="福利示意3" class="a3-case-img">
+              </div>
+            </li>
+            <li style="display: flex; gap: 16px; align-items: flex-start;">
+              <div style="flex: 1; min-width: 0;">
+                <strong>大场贴片</strong>
+                <div class="num-desc">清晰展示活动主题 + 大场活动 + 限时特惠,刺激即时下单</div>
+                <ul class="num-sublist">
+                  <li><strong>贴片三要素</strong>:顶部 <span class="tag">品牌背书</span> + 中部 <span class="tag">大场场景</span> + 底部 <span class="tag">核心利益点</span>(如"鹅选美好生活节 / 清凉节大场 / 限时特惠 XX元")</li>
+                  <li><strong>封面对齐</strong>:高清、色彩明亮、富有视觉冲击力,封面点击率直接影响私域分享带来的自然流</li>
+                  <li><strong>历史验证</strong>:三禾、太力、坂田川、聚量挂载官方贴片后,客户自述场观较未挂载 <strong>+30%</strong></li>
+                </ul>
+              </div>
+              <div class="a3-case-row">
+                <img src="case_images/a3_sticker_1.png" alt="贴片示意1" class="a3-case-img">
+                <img src="case_images/a3_sticker_2.png" alt="贴片示意2" class="a3-case-img">
+                <img src="case_images/a3_sticker_3.png" alt="贴片示意3" class="a3-case-img">
+              </div>
+            </li>
+            <li style="display: flex; gap: 16px; align-items: flex-start;">
+              <div style="flex: 1; min-width: 0;">
+                <strong>特殊形式策划(总裁进播 / 现场走播)</strong>
+                <div class="num-desc">历史实测人均观看 +10%、进播时段环比 +110%,量级环比带动效果均较好</div>
+                <ul class="num-sublist">
+                  <li><strong>总裁/创始人进播</strong>:邀请品牌创始人/总裁/营销总裁亲临,讲品牌故事与产品初衷,停留时长与转化率显著提升</li>
+                  <li><strong>现场走播</strong>:主播走出直播间到展会/工厂/仓库现场,让用户"看到产品诞生地",信任感倍增</li>
+                  <li><strong>参考案例</strong>:欧洛德厂长驾到、张小泉林永健代言走播、太力百货展现场走播、迈巴勒展会走播</li>
+                </ul>
+              </div>
+              <div class="a3-case-row">
+                <img src="case_images/a3_special_1.jpg" alt="特殊形式1" class="a3-case-img">
+                <img src="case_images/a3_special_2.jpg" alt="特殊形式2" class="a3-case-img">
+                <img src="case_images/a3_special_3.png" alt="特殊形式3" class="a3-case-img">
+              </div>
+            </li>
+          </ol>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== B. 投放量级基建门槛 ============== -->
+    <div class="stage-section">
+      <div class="stage-section-head">
+        <span class="stage-label B">B</span>
+        <h3>投放量级 · 基建门槛</h3>
+      </div>
+
+      <div class="threshold-row">
+        <div class="threshold-card">
+          <div class="th-label">账户日余额</div>
+          <div class="th-value">10<small>万+</small></div>
+          <div class="th-note">日预算不限制</div>
+        </div>
+        <div class="threshold-card">
+          <div class="th-label">单主体账户数</div>
+          <div class="th-value">≥2<small>个</small></div>
+          <div class="th-note">分账户跑量分散风险</div>
+        </div>
+        <div class="threshold-card">
+          <div class="th-label">在线广告数</div>
+          <div class="th-value">8<small>+</small></div>
+          <div class="th-note">保证探索广度</div>
+        </div>
+        <div class="threshold-card">
+          <div class="th-label">创意素材总量</div>
+          <div class="th-value">300<small>+</small></div>
+          <div class="th-note">单广告 10-15 创意 × 3-5 视频</div>
+        </div>
+      </div>
+
+      <div class="compact-tip warm">
+        <div class="compact-tip-head">
+          <span class="tip-required">必做</span>
+          <span class="compact-tip-title">B1 · 素材类型加码</span>
+        </div>
+        <div class="compact-tip-body">
+          <ul>
+            <li><strong>增加大场切片素材</strong>:大场现场切片 + 大场高光切片持续利用,反哺平播跑量</li>
+            <li><strong>增加直投实时画面</strong>:展现大场热闹场景,帮助 <strong>CVR 提升</strong>,进人数量增加</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== C. 产品工具加持 ============== -->
+    <div class="stage-section">
+      <div class="stage-section-head">
+        <span class="stage-label C">C</span>
+        <h3>产品工具加持(可选)</h3>
+      </div>
+
+      <!-- C1 大场速推 -->
+      <div class="compact-tip purple">
+        <div class="compact-tip-head">
+          <span class="tip-optional">可选</span>
+          <span class="compact-tip-title">C1 · 大场速推(对内配置)</span>
+          <span class="pill success">3C 头客展播期额外竞得消耗 3w+</span>
+        </div>
+        <div class="compact-tip-body">
+          <strong>为什么建议配置</strong>:大场时间短,要求短时间快速起量;大场速推策略生效后,专场直播流速比平常更快,短时间获取更大消耗规模。
+          <ul>
+            <li><strong>策略激进程度</strong>:可选 <span class="tag">速度优先</span> 或 <span class="tag">成本优先</span>(对成本约束严格时选成本优先)</li>
+            <li><strong>适合客户</strong>:单场预算 <span class="num-highlight">&gt;10w</span> · 在线人数 <span class="num-highlight">&gt;150</span> · 能放宽 ROI <span class="num-highlight">20%+</span>(自然流占比 10%+ 弥补)</li>
+            <li><strong>盯盘操作</strong>:助推生效期间 <strong>不做主动放量动作</strong>(提价/一键起量等);ROI 降低可适当降价 3-5 元;超成本 20%+ 协商是否关停</li>
+          </ul>
+          <div class="code-block">
+            <span class="ck-title">📋 大场速推申请模板(填写后联系行业运营)</span>
+            <span class="ck-line"><span class="ck-comment"># 示例:直播时段 10:00-16:00,加速放量时段 10:00-14:00</span></span>
+            <span class="ck-line"><span class="ck-key">1、需求提出方</span>:<span class="ck-val">客户主体名称</span></span>
+            <span class="ck-line"><span class="ck-key">2、账户id</span>:<span class="ck-val">例如 54544614</span></span>
+            <span class="ck-line"><span class="ck-key">3、生效时间及系数</span>:<span class="ck-val">2025/8/26 10:00-14:00#1.3, 14:00-16:00#1.2</span></span>
+            <span class="ck-line"><span class="ck-key">4、激进程度</span>:<span class="ck-val">成本优先 / 速度优先</span></span>
+            <span class="ck-line"><span class="ck-key">5、是否对新广告加速</span>:<span class="ck-val">是 / 否</span></span>
+            <span class="ck-line"><span class="ck-comment">⚠️ 通过运营工具干预后,存在超成本风险,「不保成本且不再赔付」</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- C2 智投专场放量 -->
+      <div class="compact-tip purple">
+        <div class="compact-tip-head">
+          <span class="tip-optional">可选</span>
+          <span class="compact-tip-title">C2 · 智投专场放量</span>
+          <span class="pill success">ARPU 提升 2 倍+</span>
+        </div>
+        <div class="compact-tip-body">
+
+          <strong>1. 产品介绍</strong>：产品能力上原子能力与速推工具相同，但智投版本会<strong>固定策略类型和系数</strong>：
+          <ul>
+            <li><strong>冷启动期</strong>：<span class="num-highlight">速度优先 1.3</span>（<strong>「消耗达到 500」</strong> 或 <strong>「浅层目标转化量达到 10 个」</strong> 即冷启动毕业）</li>
+            <li><strong>冷启动后</strong>：<span class="num-highlight">成本优先 1.2</span></li>
+          </ul>
+
+          <div style="margin-top: 14px;"><strong>2. 推荐适配客户</strong>：<strong>提报大场 + 日常想要进一步提量的客户</strong>均可以尝试</div>
+
+          <div style="margin-top: 10px; padding: 10px 12px; background: #f0fdf4; border-radius: 8px; font-size: 13px; color: var(--success); border-left: 3px solid var(--success);">
+            💡 <strong>3. 测试效果</strong>：目前在投客户<strong>直播间专场放量工具广告条均消耗 ARPU 提升 2 倍+</strong>
+          </div>
+
+          </div>
+        </div>
+      </div>
+
+    <!-- ============== D. 投中操作策略 ============== -->
+    <div class="stage-section">
+      <div class="stage-section-head">
+        <span class="stage-label D">D</span>
+        <h3>投中操作 · 盯盘策略</h3>
+      </div>
+
+      <div class="compact-tip green">
+        <div class="compact-tip-head">
+          <span class="tip-required">必做</span>
+          <span class="compact-tip-title">D1 · 注重早场 · 早场出价 +5%</span>
+        </div>
+        <div class="compact-tip-body">
+          尽早开播,<strong>早场出价高于其他时间段 <span class="num-highlight">5%</span></strong>,抓住早场流量攀升期累积转化,实现中午高峰时间流量爆发。
+        </div>
+      </div>
+
+      <div class="compact-tip green">
+        <div class="compact-tip-head">
+          <span class="tip-required">必做</span>
+          <span class="compact-tip-title">D2 · 助推期盯盘规则</span>
+        </div>
+        <div class="compact-tip-body">
+          <ul>
+            <li><strong>客户侧</strong>:助推生效期间不做过多主动放量动作(提价/一键起量等);监测 ROI 降低可适当降价 3-5 元</li>
+            <li><strong>运营侧</strong>:核心关注客户 ROI、计价率等指标,超成本 20%+ 协商是否关停助推</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== E. 投后数据复盘 ============== -->
+    <div class="stage-section">
+      <div class="stage-section-head">
+        <span class="stage-label E">E</span>
+        <h3>投后复盘 · 分时数据 + 经验沉淀</h3>
+      </div>
+
+      <div class="compact-tip gold">
+        <div class="compact-tip-head">
+          <span class="tip-required">必做</span>
+          <span class="compact-tip-title">E1 · 分时数据复盘(两个看板)</span>
+        </div>
+        <div class="compact-tip-body">
+          <ul>
+            <li><strong>视频号直播中控台</strong>:<span class="num-highlight">3s 一刷新</span>,建议盯盘主看此看板</li>
+            <li><strong>投放端推广界面</strong>:约 <span class="num-highlight">5-10 分钟</span> 一更新广告数据;广告暂停后还会有部分预拉取的溢出消耗,第二天统计最终消耗和下单数据</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="compact-tip gold">
+        <div class="compact-tip-head">
+          <span class="tip-required">必做</span>
+          <span class="compact-tip-title">E2 · 大场切片反哺 + 经验沉淀</span>
+        </div>
+        <div class="compact-tip-body">
+          <ul>
+            <li><strong>切片反哺</strong>:大场高光切片持续复用,反哺平播跑量(参考康巴赫礼品展素材 CTR +91%)</li>
+            <li><strong>截图 + 升级点备注</strong>:打榜赛看板自动入库,每场必填"人货场"三维升级点</li>
+            <li><strong>同期数据环比</strong>:拉取 CTR / CVR / 下单率 / 商品点击率环比,为下一场复用</li>
+            <li><strong>养生/焕新节目标</strong>:把客户 <strong>"经验 → 模板"</strong> 沉淀率提升至 <span class="num-highlight">80%+</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 八步走一图流总结 -->
+    <div class="card" style="margin-top: 24px; background: linear-gradient(135deg, #eff6ff, #f0fdf4); border: 1px solid #bfdbfe;">
+      <div class="card-head">
+        <div class="card-title"><span class="dot"></span>大场直播八步走 · 一图流总结</div>
+        <span class="pill info">参考 3C 大场秘籍</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 8px;">
+        <div style="background: #fff; padding: 12px 14px; border-radius: 8px; border-left: 3px solid var(--primary);">
+          <div style="font-size: 11px; color: var(--text-3); font-weight: 600;">STEP 1</div>
+          <div style="font-size: 14px; font-weight: 700; margin-top: 2px;">策划定位</div>
+          <div style="font-size: 12px; color: var(--text-2); margin-top: 4px;">场景/主题/形式/人设差异化</div>
+        </div>
+        <div style="background: #fff; padding: 12px 14px; border-radius: 8px; border-left: 3px solid var(--primary);">
+          <div style="font-size: 11px; color: var(--text-3); font-weight: 600;">STEP 2</div>
+          <div style="font-size: 14px; font-weight: 700; margin-top: 2px;">素材储备</div>
+          <div style="font-size: 12px; color: var(--text-2); margin-top: 4px;">抢首发 + 10-15 条大场素材</div>
+        </div>
+        <div style="background: #fff; padding: 12px 14px; border-radius: 8px; border-left: 3px solid var(--accent);">
+          <div style="font-size: 11px; color: var(--text-3); font-weight: 600;">STEP 3</div>
+          <div style="font-size: 14px; font-weight: 700; margin-top: 2px;">货品组合</div>
+          <div style="font-size: 12px; color: var(--text-2); margin-top: 4px;">爆品 + 赠品 + 套组三件套</div>
+        </div>
+        <div style="background: #fff; padding: 12px 14px; border-radius: 8px; border-left: 3px solid var(--accent);">
+          <div style="font-size: 11px; color: var(--text-3); font-weight: 600;">STEP 4</div>
+          <div style="font-size: 14px; font-weight: 700; margin-top: 2px;">贴片封面</div>
+          <div style="font-size: 12px; color: var(--text-2); margin-top: 4px;">品牌背书 + 场景 + 利益点</div>
+        </div>
+        <div style="background: #fff; padding: 12px 14px; border-radius: 8px; border-left: 3px solid #8b5cf6;">
+          <div style="font-size: 11px; color: var(--text-3); font-weight: 600;">STEP 5</div>
+          <div style="font-size: 14px; font-weight: 700; margin-top: 2px;">基建放量</div>
+          <div style="font-size: 12px; color: var(--text-2); margin-top: 4px;">2 账户 + 8 广告 + 300 素材</div>
+        </div>
+        <div style="background: #fff; padding: 12px 14px; border-radius: 8px; border-left: 3px solid #8b5cf6;">
+          <div style="font-size: 11px; color: var(--text-3); font-weight: 600;">STEP 6</div>
+          <div style="font-size: 14px; font-weight: 700; margin-top: 2px;">产品工具</div>
+          <div style="font-size: 12px; color: var(--text-2); margin-top: 4px;">大场速推 + 智投短直双开</div>
+        </div>
+        <div style="background: #fff; padding: 12px 14px; border-radius: 8px; border-left: 3px solid var(--success);">
+          <div style="font-size: 11px; color: var(--text-3); font-weight: 600;">STEP 7</div>
+          <div style="font-size: 14px; font-weight: 700; margin-top: 2px;">早场盯盘</div>
+          <div style="font-size: 12px; color: var(--text-2); margin-top: 4px;">早场出价 +5%,中控台 3s 刷新</div>
+        </div>
+        <div style="background: #fff; padding: 12px 14px; border-radius: 8px; border-left: 3px solid #d4a017;">
+          <div style="font-size: 11px; color: var(--text-3); font-weight: 600;">STEP 8</div>
+          <div style="font-size: 14px; font-weight: 700; margin-top: 2px;">切片反哺</div>
+          <div style="font-size: 12px; color: var(--text-2); margin-top: 4px;">高光切片反哺平播 + 经验沉淀</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="footer-line">
+    腾讯广告·消电日百中心 ｜ 「鹅选美好生活月」阶段一(清凉美好节 7/20-7/26) 数据 & 优质 Case 分享
+  </div>
+  <div style="margin-top: 8px;">数据来源:打榜赛看板(http://1.14.143.207/peipei-mhshj/) + 通用分析数据集(703)</div>
+</footer>
+
+</body>
+</html>
